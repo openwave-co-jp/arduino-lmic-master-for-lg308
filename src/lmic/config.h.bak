@@ -7,10 +7,8 @@
 
 //#define CFG_eu868 1
 //#define CFG_us915 1
-
 #define CFG_as923 1
 //#define AS923_WITH_CAP 1   //uncomment this to enable Tx Capping to Duty Cycle. Look at lmic.c, function nextTx.
-
 // This is the SX1272/SX1273 radio, which is also used on the HopeRF
 // RFM92 boards.
 //#define CFG_sx1272_radio 1
