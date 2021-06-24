@@ -2637,3 +2637,13 @@ void LMIC_setLinkCheckMode (bit_t enabled) {
 void LMIC_setClockError(u2_t error) {
     LMIC.clockError = error;
 }
+
+void LMIC_setSleep(){
+	//set radio to sleep
+    opmodeSleep();
+}
+
+void LMIC_setStandby (){
+	//set radio to standby
+	opmodeStandby();
+}
