@@ -116,15 +116,18 @@ enum { DR_DFLTMIN = DR_SF8C };
 enum { DR_PAGE = DR_PAGE_US915 };
 
 // Default frequency plan for US 915MHz
-enum { US915_125kHz_UPFBASE = 902300000,
-       US915_125kHz_UPFSTEP =    200000,
-       US915_500kHz_UPFBASE = 903000000,
-       US915_500kHz_UPFSTEP =   1600000,
-       US915_500kHz_DNFBASE = 923300000,
-       US915_500kHz_DNFSTEP =    600000
+enum { US915_125kHz_UPFBASE = 915200000,   //(Zaki) base is 915.2, so if want to change, change here.
+       US915_125kHz_UPFSTEP =    200000,   //200kHz spacing
+       US915_500kHz_UPFBASE = 919800000,   //not being used in our LORA proto
+       US915_500kHz_UPFSTEP =   1600000,   //(Zaki) i don't think we want to use this.
+       US915_500kHz_DNFBASE = 923300000,   //Start of the Lorawan Standard Downlink Channel
+       US915_500kHz_DNFSTEP =    600000    //600kHz spacing
 };
-enum { US915_FREQ_MIN = 902000000,
-       US915_FREQ_MAX = 928000000 };
+enum { US915_FREQ_MIN = 919800000,         //our GW freq starts here, so follow GW
+       US915_FREQ_MAX = 928000000 };       //to cater up to the approved Downlink channel
+       
+       //923300000; 923900000; 924500000; 925100000; 925700000; 926300000; 926900000, 0,927500000 
+       //Above are the standard Downlink channel as per Lorawan 915MHz. Notice the spacing is 600Khz.
 
 enum { CHNL_PING         = 0 }; // used only for default init of state (follows beacon - rotating)
 enum { FREQ_PING         = US915_500kHz_DNFBASE + CHNL_PING*US915_500kHz_DNFSTEP };  // default ping freq
@@ -152,7 +155,7 @@ enum {
 #elif defined(CFG_as923) // ==============================================
 
 enum _dr_as923_t { DR_SF12=0, DR_SF11, DR_SF10, DR_SF9, DR_SF8, DR_SF7, DR_SF7B, DR_FSK, DR_NONE };
-enum { DR_DFLTMIN = DR_SF7 };
+enum { DR_DFLTMIN = DR_SF10 };
 enum { DR_PAGE = DR_PAGE_AS923 };
 
 // Default frequency plan for AS 923MHz ISM band
@@ -164,16 +167,16 @@ enum { DR_PAGE = DR_PAGE_AS923 };
 //based on TTN arrangement
 enum { AS923_F1 = 923200000,      // g1   SF7-12
        AS923_F2 = 923400000,      // g1   SF7-12 
-       AS923_F3 = 922200000,      // g1   SF7-12
-       AS923_F4 = 922400000,      // g2   SF7-12
-       AS923_F5 = 922600000,      // g2   SF7-12
-       AS923_F6 = 922800000,      // g3   SF7-12
-       AS923_J4 = 923000000,      // g2   SF7-12  
-       AS923_J5 = 922000000,      // g2   SF7-12   
-       AS923_J6 = 922100000,      // g2   SF7      
+       AS923_F3 = 923600000,      // g1   SF7-12
+       AS923_F4 = 923800000,      // g2   SF7-12
+       AS923_F5 = 924000000,      // g2   SF7-12
+       AS923_F6 = 924200000,      // g3   SF7-12
+       AS923_J4 = 924400000,      // g2   SF7-12  
+       AS923_J5 = 924600000,      // g2   SF7-12   
+       AS923_J6 = 924800000,      // g2   SF7      
 };
-enum { AS923_FREQ_MIN = 921000000,
-       AS923_FREQ_MAX = 924000000 };
+enum { AS923_FREQ_MIN = 923200000,
+       AS923_FREQ_MAX = 925000000 };
 
 enum { CHNL_PING         = 5 };
 enum { FREQ_PING         = AS923_F6 };  // default ping freq
@@ -199,6 +202,7 @@ enum {
 };
 
 #endif // ===================================================
+
 
 enum {
     // Join Request frame format
