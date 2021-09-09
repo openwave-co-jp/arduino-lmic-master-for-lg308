@@ -1715,8 +1715,8 @@ static bit_t processJoinAccept (void) {
         // Both after a random/chosen amount of ticks.
         os_setTimedCallback(&LMIC.osjob, os_getTime()+delay,
                             (delay&1) != 0
-                            ? FUNC_ADDR(onJoinFailed)      // one JOIN iteration done and failed
-                            : FUNC_ADDR(runEngineUpdate)); // next step to be delayed
+                            ? FUNC_ADDR(runEngineUpdate)      // one JOIN iteration done and failed
+                            : FUNC_ADDR(onJoinFailed)); // next step to be delayed
         return 1;
     }
     u1_t hdr  = LMIC.frame[0];
@@ -2333,7 +2333,7 @@ static void engineUpdate (void) {
                 lmic_printf("%lu: Airtime available at %lu (channel duty limit)\n", os_getTime(), txbeg);
             #endif
         } else {
-            txbeg = LMIC.txend;
+            txbeg = LMIC.txend = nextTx(now);
             #if LMIC_DEBUG_LEVEL > 1
                 lmic_printf("%lu: Airtime available at %lu (previously determined)\n", os_getTime(), txbeg);
             #endif
